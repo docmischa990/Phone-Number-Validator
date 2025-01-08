@@ -84,6 +84,7 @@ body {
 #backspace-btn {
     position: absolute;
     right: 10px;
+    color: rgba(0, 0, 0, 0.74);
     background-color: #f5f5f5;
     border: none;
     border-radius: 5px;

@@ -4,6 +4,7 @@ const clearBtn = document.getElementById("clear-btn");
 const resetBtn = document.getElementById("reset-btn");
 const results = document.getElementById("results-div");
 const currentTime = document.getElementById("current-time");
+const keypad = document.querySelector(".keypad");
 
 // current time
 const updateTime = () => {
@@ -26,6 +27,31 @@ const updateTime = () => {
 updateTime();
 
 setInterval(updateTime, 1000);
+
+// Keypad buttons
+const handleKeypadClick = (value) => {
+    userInput.value += value;
+    toggleBackspaceButton();
+}
+
+// Backspace button
+const backspaceBtn = document.createElement('button');
+backspaceBtn.id = 'backspace-btn';
+backspaceBtn.textContent = '⌫';
+const inputWrapper = document.getElementById('input-wrapper');
+inputWrapper.appendChild(backspaceBtn);
+backspaceBtn.style.display = 'none';
+
+const toggleBackspaceButton = () => {
+    backspaceBtn.style.display = userInput.value.trim().length > 0 ? 'inline-block' : 'none';
+}
+
+toggleBackspaceButton();
+
+const handleBackspace = () => {
+    userInput.value = userInput.value.slice(0, -1);
+    toggleBackspaceButton();
+}
 
 
 // User input
@@ -64,6 +90,17 @@ checkBtn.addEventListener('click', () => {
     validate(userInputValue);
 });
 
+keypad.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+        const value = e.target.textContent.trim();
+        handleKeypadClick(value);
+    }
+});
+
+backspaceBtn.addEventListener('click', handleBackspace);
+
+userInput.addEventListener('input', toggleBackspaceButton);
+
 userInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -71,3 +108,4 @@ userInput.addEventListener("keydown", (e) => {
     validate(userInputValue);
   }
 });
+
