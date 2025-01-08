@@ -65,16 +65,21 @@ const clearInputAndResults = () => {
 
 
 const validate = (phoneNumber) => {
-    const phoneRegex = /^(\+1\s?)?(\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    const phoneRegex = /^(\+?1\s?)?(\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}$/
+
+    if (!phoneNumber.trim()) {
+        alert("Please provide a phone number");
+        return;
+    };
 
     const isValid = phoneRegex.test(phoneNumber);
 
     if (isValid) {
-        results.textContent = "Valid phone number!";
+        results.textContent = `Valid US number: ${phoneNumber}`;
         results.classList.add('valid');
         results.classList.remove('invalid');
     } else {
-        results.textContent = "Invalid phone number. Please try again.";
+        results.textContent = `Invalid US number: ${phoneNumber}`;
         results.classList.add('invalid');
         results.classList.remove('valid');
     }
